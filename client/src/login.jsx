@@ -1,12 +1,23 @@
 import axios from "axios";
 import { useState } from "react";
 import "./login.css";
+import { useSetBackground } from "../src/Context/background.context";
 
 export const Login = ({setIsLoggedIn}) => {
   const [user, setUser] = useState({
     email: "",
     password: "",
   });
+  const setBackground = useSetBackground();
+
+  useLayoutEffect(() => {
+    setBackground(
+      "https://www.only-numbers.com/wp-content/uploads/2016/12/shutterstock_368567249.jpg"
+    );
+  }, []);
+
+  
+
 
   const onChangeHandle = ({ target }) => {
     const { name, value } = target;
