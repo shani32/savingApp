@@ -34,7 +34,7 @@ const UserSchema = new Schema({
   ],
 });
 
-UserSchema.virtual("transaction", {
+UserSchema.virtual("Transaction", {
   ref: "Transaction",
   localField: "_id",
   foreignField: "owner"

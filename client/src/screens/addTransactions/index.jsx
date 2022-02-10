@@ -2,29 +2,33 @@ import React, { useState, useContext, useLayoutEffect } from "react";
 import { useSetBackground } from "../../Context/background.context";
 import { GlobalContext } from "../../Context/GlobalState";
 import "./addTransactions.styles.css";
+import  axios  from 'axios';
 
-const AddTransaction = () => {
+const AddTransaction = ({setTransactions}) => {
   const [text, setText] = useState("");
   const [amount, setAmount] = useState(0);
 
   const setBackground = useSetBackground();
 
-  // useLayoutEffect(() => {
-  //   setBackground(
-  //     "https://image.shutterstock.com/image-photo/finger-pressing-block-chain-text-260nw-1026226699.jpg"
-  //   );
-  // }, []);
 
-  const { addTransaction } = useContext(GlobalContext);
 
-  const onSubmit = (e) => {
+  const onSubmit = async (e) => {
     e.preventDefault();
-    const newTransaction = {
-      id: Math.floor(Math.random() * 100000000),
+    const user = JSON.parse(localStorage.getItem("userDetails"));
+    const transaction = {
+      _id: user._id,
       text,
       amount: +amount,
     };
-    addTransaction(newTransaction);
+    alert(`${text} transaction of ${amount} has been added`);
+    const {data:{data:newTransaction}} = await axios.post("http://localhost:5000/api/v1/transactions", transaction);
+    console.log(newTransaction);
+    setTransactions((state) => {
+      state.push(newTransaction)
+      console.log(state)
+      return state
+    });
+
   };
   return (
     <div className="container">
@@ -62,4 +66,3 @@ const AddTransaction = () => {
 };
 
 export default AddTransaction;
-

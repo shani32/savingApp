@@ -1,7 +1,8 @@
 import axios from "axios";
-import React, { useEffect, useReducer, useRef } from "react";
+import React, { useReducer, useRef, useLayoutEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./login.styles.css";
+import { useSetBackground } from "../../Context/background.context";
 
 const INPUT_ATTR = [
   {
@@ -47,9 +48,12 @@ const Login = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
-  useEffect(() => {
-    if (!tokenRef.current) navigate("/login");
+  const setBackground = useSetBackground();
+
+  useLayoutEffect(() => {
+    setBackground("https://www.thetimes.co.uk/imageserver/image/%2Fmethode%2Ftimes%2Fprod%2Fweb%2Fbin%2F6e1a49b0-6817-11e8-996c-7589300f03c9.jpg?crop=2120%2C1192%2C0%2C110");
   }, []);
+
 
   const handleInput = ({ target: { value, name } }) =>
     dispatch({ name, payload: value });

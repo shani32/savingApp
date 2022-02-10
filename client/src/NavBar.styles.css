@@ -40,6 +40,21 @@ background-color: white;
 color: #191919;
 height: 70px;
 }
+
+.register {
+  margin-right: 70px;
+  text-align: center;
+  font-size: 18px;
+  color: white;
+  text-align: center;
+  line-height: 1.2;
+}
+.register:hover, .home-icon:hover, .homepage-icon:hover, .transaction-icon:hover{
+background-color: white;
+color: #191919;
+height: 70px;
+}
+
 .home-icon {
   color: white;
   padding-right: 10px;

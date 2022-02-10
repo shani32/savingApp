@@ -1,10 +1,17 @@
 import React from "react";
 import "./NavBar.styles.css";
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 export const NavBar = () => {
   const location = useLocation();
+  const navigate = useNavigate();
+  const getUserName = () => {
 
+    if (JSON.parse(localStorage.getItem("userDetails")).name) {
+      return JSON.parse(localStorage.getItem("userDetails")).name;
+    }
+    return "";
+  }
   const logOut = () => {
     localStorage.removeItem("token");
     localStorage.removeItem("userDetails");
@@ -25,9 +32,15 @@ export const NavBar = () => {
         </Link>
       </div>
       <div className="side-two">
+        <Link to={"/register"}>
+          <span className="register">
+            Register
+          </span>
+        </Link>
         <Link to={"/login"}>
           <span onClick={logOut} className="login">
-            {location.pathname === "/login" ? "Login" : "Logout"}
+
+            {!localStorage.getItem("token") || location.pathname === "/login" ? "Login" : getUserName() + "Logout"}
           </span>
         </Link>
       </div>

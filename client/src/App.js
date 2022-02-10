@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import Register from "./screens/register";
 
 import { GlobalProvider } from "./Context/GlobalState";
-import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import AddTransactions from "./screens/addTransactions";
 import HomePage from "./screens/homePage";
 import MySpace from "./screens/mySpace";
@@ -12,9 +12,26 @@ import { useBackground } from "./Context/background.context";
 import { NavBar } from "./NavBar";
 import { LogOutContext } from "./Context/app.context";
 import UserAuth from "./userAuth";
+import AddTransaction from "./screens/addTransactions";
+import axios from "axios";
+
+
+
+
 
 function App() {
   const background = useBackground();
+  const [transactions, setTransactions] = useState([])
+
+  useEffect(() => {
+    async function getTransactions() {
+      const { data: { data: transactionsData } } = await axios.get("http://localhost:5000/api/v1/transactions");
+      console.log(transactionsData)
+      setTransactions(transactionsData)
+    }
+    getTransactions()
+  }, [])
+
 
   return (
     <BrowserRouter>
@@ -22,11 +39,13 @@ function App() {
       <GlobalProvider>
         <div style={{ backgroundImage: `url(${background})` }} className="App">
           <Routes>
-            <Route path="/login" element={<Login />} />
+            <Route path="/" element={<UserAuth/>}>
             <Route path="/register" element={<Register />} />
             <Route path="/" element={<HomePage />} />
-            <Route path="/mySpace" element={<MySpace />} />
-            <Route path="/addTransactions" element={<AddTransactions />} />
+            <Route path="/mySpace" element={<MySpace transactions={transactions} setTransactions={setTransactions} />} />
+            <Route path="/addTransactions" element={<AddTransactions setTransactions={setTransactions} />} />
+            </Route>
+            <Route path="/login" element={<Login />} />
           </Routes>
         </div>
       </GlobalProvider>

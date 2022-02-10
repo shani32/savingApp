@@ -1,22 +1,33 @@
-import React, { useContext } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { GlobalContext } from "../../../../Context/GlobalState";
 import { numberWithCommas } from "../../../../utils/format";
 import "./incomeExpenses.styles.css";
 
-const IncomeExpenses = () => {
-  const { transactions } = useContext(GlobalContext);
+const IncomeExpenses = ({ amounts }) => {
+  const [income, setIncome] = useState([0]);
+  const [expense, setExpense] = useState([0]);
 
-  const amounts = transactions.map((transaction) => transaction.amount);
 
-  const income = amounts
-    .filter((item) => item > 0)
-    .reduce((acc, item) => (acc += item), 0)
-    .toFixed(2);
+  const calculateIncome = () => {
+    const incomes = amounts?.filter((item) => item > 0);
+    !incomes.length && incomes.push(0)
+    const newIncome = parseFloat(incomes.reduce((acc, item) => (acc += item), 0).toFixed(2))
+    setIncome(newIncome);
+  }
+  const calculateExpense = () => {
+    const expenses = amounts?.filter((item) => item < 0)
+    !expenses.length && expenses.push(0)
+    const newExpense = parseFloat(expenses.reduce((acc, item) => (acc += item), 0).toFixed(2));
+    setExpense(newExpense);
+  }
 
-  const expense = (
-    amounts.filter((item) => item < 0).reduce((acc, item) => (acc += item), 0) *
-    -1
-  ).toFixed(2);
+
+  useEffect(() => {
+    calculateIncome()
+    calculateExpense()
+  }, [amounts]);
+
+
 
   return (
     <div className="income-warpper">

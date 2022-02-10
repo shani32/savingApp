@@ -1,5 +1,7 @@
-import React, { useReducer } from "react";
+import React, { useLayoutEffect, useReducer } from "react";
 import "./register.styles.css";
+import axios from "axios";
+import { useSetBackground } from "../../Context/background.context";
 
 const INPUT_ATTR = [
   {
@@ -17,11 +19,11 @@ const INPUT_ATTR = [
     id: "register-password-input",
   },
   {
-    name: "userName",
+    name: "name",
     type: "text",
     placeholder: "User Name",
     className: "register-input-field",
-    id: "register-password-input",
+    id: "register-name-input",
   },
 ];
 
@@ -32,7 +34,7 @@ const Input = ({ ...attr }) => {
 const INITIAL_STATE = {
   email: "",
   password: "",
-  userName: "",
+  name: "",
 };
 
 const inputReducer = (state, action) => {
@@ -41,7 +43,7 @@ const inputReducer = (state, action) => {
       return { ...state, [action.name]: action.payload };
     case "password":
       return { ...state, [action.name]: action.payload };
-    case "userName":
+    case "name":
       return { ...state, [action.name]: action.payload };
     default:
       return state;
@@ -50,6 +52,27 @@ const inputReducer = (state, action) => {
 
 const Register = () => {
   const [inputsVal, dispatch] = useReducer(inputReducer, INITIAL_STATE);
+
+
+  const setBackground = useSetBackground();
+
+  useLayoutEffect(() => {
+    setBackground("https://s37564.pcdn.co/wp-content/uploads/2016/11/salaries-31116-scaled.jpeg.optimal.jpeg");
+  }, []);
+
+  const onClickHandel = (e) => {
+    e.preventDefault();
+    console.log(inputsVal);
+    axios
+      .post("http://localhost:5000/api/v1/users/add", inputsVal)
+      .then(({ data }) => {
+        console.log("register successfully", data);
+      })
+      .catch((error) => {
+        console.log(error.response.data);
+        console.log("Error");
+      });
+  };
 
   const handleInput = ({ target: { value, name } }) =>
     dispatch({ name, payload: value });
@@ -60,12 +83,12 @@ const Register = () => {
       </header>
       <form className="register-form">
         <div className="register-paper">
-          {INPUT_ATTR.map((attr) => (
-            <Input key={attr.id} {...attr} onChange={handleInput} />
+          {INPUT_ATTR.map((attr, index) => (
+            <Input key={index} {...attr} onChange={handleInput} />
           ))}
         </div>
         <div className="register-submit-button-container">
-          <button className="register-submit-button">Login</button>
+          <button onClick={onClickHandel} className="register-submit-button">Register</button>
         </div>
       </form>
     </div>
