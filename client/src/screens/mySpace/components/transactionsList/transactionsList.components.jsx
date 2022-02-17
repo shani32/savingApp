@@ -8,7 +8,7 @@ const TransactionList = ({ transactions, setTransactions }) => {
 
   const deleteTransaction =async (index) => {
     console.log(index)
-    await axios.delete(`http://localhost:5000/api/v1/transactions/${transactions[index]._id}`);
+    await axios.delete(`https://savingappforbetterlife.herokuapp.com/api/v1/transactions/${transactions[index]._id}`);
     setTransactions(transactions.filter((_, i) => i !== index));
   }
 

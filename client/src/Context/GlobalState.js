@@ -11,18 +11,13 @@ const initialState = {
 //create context
 export const GlobalContext = createContext(initialState);
 
-// export const useGlobalContext = () => {
-//     return useContext(GlobalContext)
-// }
-
-//provider component
 export const GlobalProvider = ({ children }) => {
   const [state, dispatch] = useReducer(AppReducer, initialState);
 
   //actions
   async function getTransactions() {
     try {
-      const {data} = await axios.get("http://localhost:5000/api/v1/transactions");
+      const {data} = await axios.get("https://savingappforbetterlife.herokuapp.com/api/v1/transactions");
       console.log("My Transaction", data);
       dispatch({
         type: "GET_TRANSACTIONS",
@@ -38,7 +33,7 @@ export const GlobalProvider = ({ children }) => {
 
   async function deleteTransaction(id) {
     try {
-      await axios.delete(`http://localhost:5000/api/v1/transactions/${id}`);
+      await axios.delete(`https://savingappforbetterlife.herokuapp.com/api/v1/transactions/${id}`);
       dispatch({
         type: "DELETE_TRANSACTION",
         payload: id,
@@ -57,7 +52,7 @@ export const GlobalProvider = ({ children }) => {
       },
     };
     try {
-      const {data} = await axios.post("http://localhost:5000/api/v1/transactions", transaction, config);
+      const {data} = await axios.post("https://savingappforbetterlife.herokuapp.com/api/v1/transactions", transaction, config);
       dispatch({
         type: "ADD_TRANSACTION",
         payload:data,

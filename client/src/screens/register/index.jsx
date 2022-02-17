@@ -64,7 +64,7 @@ const Register = () => {
     e.preventDefault();
     console.log(inputsVal);
     axios
-      .post("http://localhost:5000/api/v1/users/add", inputsVal)
+      .post("https://savingappforbetterlife.herokuapp.com/api/v1/users/add", inputsVal)
       .then(({ data }) => {
         console.log("register successfully", data);
       })

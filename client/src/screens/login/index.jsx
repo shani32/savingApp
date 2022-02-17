@@ -62,7 +62,7 @@ const Login = () => {
     const newUser = inputsVal;
     event.preventDefault();
     const { data: user } = await axios.post(
-      "http://localhost:5000/api/v1/users/login",
+      "https://savingappforbetterlife.herokuapp.com/api/v1/users/login",
       newUser
     );
     if (!user) return alert("inValid")

@@ -25,7 +25,7 @@ function App() {
 
   useEffect(() => {
     async function getTransactions() {
-      const { data: { data: transactionsData } } = await axios.get("http://localhost:5000/api/v1/transactions");
+      const { data: { data: transactionsData } } = await axios.get("https://savingappforbetterlife.herokuapp.com/api/v1/transactions");
       console.log(transactionsData)
       setTransactions(transactionsData)
     }

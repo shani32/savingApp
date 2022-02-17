@@ -8,7 +8,7 @@ export const NavBar = () => {
   const getUserName = () => {
 
     if (JSON.parse(localStorage.getItem("userDetails")).name) {
-      return JSON.parse(localStorage.getItem("userDetails")).name;
+      return JSON.parse(localStorage.getItem("userDetails")).name + "  ";
     }
     return "";
   }
@@ -40,7 +40,7 @@ export const NavBar = () => {
         <Link to={"/login"}>
           <span onClick={logOut} className="login">
 
-            {!localStorage.getItem("token") || location.pathname === "/login" ? "Login" : getUserName() + "Logout"}
+            {!localStorage.getItem("token") || location.pathname === "/login" ? "Login" :  getUserName() + "Logout"}
           </span>
         </Link>
       </div>

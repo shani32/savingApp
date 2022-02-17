@@ -16,7 +16,7 @@ export const Register = () => {
 
   const onClickHandel = async ()=>{
     axios
-    .post("http://localhost:5000/api/v1/users/add", user)
+    .post("https://savingappforbetterlife.herokuapp.com/api/v1/users/add", user)
     .then(({ data }) => {
       console.log("registerd");
       window.localStorage.setItem("token", data.token);

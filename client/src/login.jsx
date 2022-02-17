@@ -27,7 +27,7 @@ export const Login = ({setIsLoggedIn}) => {
 
   const onClickHandel = () => {
     axios
-      .post("http://localhost:5000/api/v1/users/login", user)
+      .post("https://savingappforbetterlife.herokuapp.com/api/v1/users/login", user)
       .then(({ data }) => {
         setIsLoggedIn(true)
         tokenToLocalStorage(data[2]);

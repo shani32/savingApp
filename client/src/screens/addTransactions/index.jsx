@@ -21,7 +21,7 @@ const AddTransaction = ({setTransactions}) => {
       amount: +amount,
     };
     alert(`${text} transaction of ${amount} has been added`);
-    const {data:{data:newTransaction}} = await axios.post("http://localhost:5000/api/v1/transactions", transaction);
+    const {data:{data:newTransaction}} = await axios.post("https://savingappforbetterlife.herokuapp.com/api/v1/transactions", transaction);
     console.log(newTransaction);
     setTransactions((state) => {
       state.push(newTransaction)

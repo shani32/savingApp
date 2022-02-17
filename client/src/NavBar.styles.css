@@ -26,6 +26,11 @@
   float: right;
 }
 
+.fullname {
+  margin-right: 55px;
+  padding-right: 55px;
+  background-color: red;
+}
 
 .login {
   margin-right: 70px;
